@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="getCity" type="text" class="form-control" placeholder="Enter a city name for Weather ...">
+                <div class="input-group-append">
+                    <button onclick="searchBtn()" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="wIcon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="cityName">Dhaka</h1>
+            <h3><span id="getDeg">38.06</span>&deg;C</h3>
+            <h1 class="lead" id="stutas">Clouds</h1>
+        </div>
+    </div>
+    <script>
+         let getIncon = document.getElementById('wIcon');
+         let cityNamePost = document.getElementById('cityName');
+         let degPost = document.getElementById('getDeg');
+         let postStatas = document.getElementById('stutas');
+         let getCity = document.getElementById('getCity');
+         
+         function searchBtn(){
+             console.log(getCity.value);
+            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + getCity.value + '&appid=462fff734db82c4f50eb886452e2ea5d')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getIncon.src = 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png';
+                console.log( 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png')
+                cityNamePost.innerText = data.name;
+                degPost.innerText = parseFloat(data.main.temp);
+                postStatas.innerText = data.weather[0].description;
+                console.log(data.weather[0].icon)
+        })
+         }
+
+
+        
+    </script>
+</body>
+
+</html>
